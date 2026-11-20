@@ -49,6 +49,11 @@ app.use("/crud", desigCRoute);
 app.use("/crud", materialRoute);
 app.use("/crud", materCRoute);
 app.use("/crud", userRoute);
+
+
+app.use((req, res) => {
+    res.status(404).render("404");
+});
 /*
 app.use("/api/materialCodes", materCRoute);
 app.use("/api/materials", materialRoute);
