@@ -1,0 +1,23 @@
+<%- include("partials/header") %>
+<div>
+    <table class="w3-table w3-table-all w3-hoverable w3-responsive w3-padding-32">
+        <thead>
+            <tr>
+                <th>Felhasználó neve</th>
+                <th>Üzenete</th>
+                <th>Beküldés dátuma</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% feedbacks.forEach(feedback => { %>
+                <tr>
+                    <td><%= feedback.nev %></td>
+                    <td><%= feedback.uzenet %></td>
+                    <td><%= feedback.createdAt.toLocaleString("hu-HU") %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include("partials/footer") %>

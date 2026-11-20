@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+<div>
+    <h1 class="w3-flex-center w3-padding-16">Üzenetek oldal</h1>
+    <% if(!user)
+    { %>
+        <div class="w3-padding-64 w3-gap-small">
+            <h2 class="w3-flex-center">Üzenetek küldéséhez be kell jelentkezned!</h2>
+            <a class="w3-button w3-padding-large w3-grey w3-flex-center" href="/login">Bejelentkezés</a>
+            <br><br><br>
+            <h2 class="w3-flex-center">Ha még nincs fiókod, hozz létre egyet!</h2>
+            <a class="w3-button w3-padding-large w3-grey w3-flex-center" href="/register">Regisztráció</a>
+        </div>
+    <% }
+    else {%>
+        <% if(message != ""){%><h2 class="w3-container w3-success"><%= message %></h2><%} %>
+        <form method="POST" class="w3-flex-column w3-gap-small w3-padding-32">
+            <input type="hidden" name="nev" value="<%= user.username %>" required class="w3-container">
+            <input name="uzenet" placeholder="Írd ide az üzeneted." maxlength="50" required class="w3-container">
+            <button class="w3-container">Beküld</button>
+        </form>   
+    <% }
+    %>
+</div>
+<%- include("partials/footer") %>
