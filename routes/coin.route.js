@@ -1,25 +1,15 @@
 const router = require("express").Router();
 const coinController = require("../controllers/coin.controller.js");
 
+isAdmin=(req,res,next)=>{
+    if(req.session.user && req.session.user.role==="admin"){return next();}
+    res.redirect("/");
+}
 
-// ___________________ Create ___________________ //
 
-router.post("/", coinController.createCoin);
+router.get("/coins", isAdmin, coinController.getAllCoins, (req, res) => {
+    res.render("coins", {coins: res.locals.coins})
+});
 
-// ___________________ Get All ___________________ //
-
-router.get("/", coinController.getAllCoins);
-
-// ___________________ Get Single ___________________ //
-
-router.get("/:id", coinController.getSingleCoin);
-
-// ___________________ Modify ___________________ //
-
-router.put("/:id", coinController.modifyCoin);
-
-// ___________________ Delete ___________________ //
-
-router.delete("/:id", coinController.deleteCoin);
 
 module.exports = router;

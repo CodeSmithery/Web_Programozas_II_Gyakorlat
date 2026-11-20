@@ -1,25 +1,15 @@
 const router = require("express").Router();
-const materialCodeController = require("../controllers/materialCode.controller.js")
+const materialCodeController = require("../controllers/materialCode.controller.js");
 
 
-// ___________________ Create ___________________ //
+isAdmin=(req,res,next)=>{
+    if(req.session.user && req.session.user.role==="admin"){return next();}
+    res.redirect("/");
+}
 
-router.post("/", materialCodeController.createMaterialCode);
 
-// ___________________ Get All ___________________ //
-
-router.get("/", materialCodeController.getAllMaterialCodes);
-
-// ___________________ Get Single ___________________ //
-
-router.get("/:id", materialCodeController.getSingleMaterialCode);
-
-// ___________________ Modify ___________________ //
-
-router.put("/:id", materialCodeController.modifyMaterialCode);
-
-// ___________________ Delete ___________________ //
-
-router.delete("/:id", materialCodeController.deleteMaterialCode);
+router.get("/materialCodes", isAdmin, materialCodeController.getAllMaterialCodes, (req, res) => {
+    res.render("materialCodes", {materialCodes: res.locals.materialCodes})
+});
 
 module.exports = router;

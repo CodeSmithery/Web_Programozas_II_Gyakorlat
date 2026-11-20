@@ -2,24 +2,14 @@ const router = require("express").Router();
 const designerController = require("../controllers/designer.controller.js");
 
 
-// ___________________ Create ___________________ //
+isAdmin=(req,res,next)=>{
+    if(req.session.user && req.session.user.role==="admin"){return next();}
+    res.redirect("/");
+}
 
-router.post("/", designerController.createDesigner);
 
-// ___________________ Get All ___________________ //
-
-router.get("/", designerController.getAllDesigners);
-
-// ___________________ Get Single ___________________ //
-
-router.get("/:id", designerController.getSingleDesigner);
-
-// ___________________ Modify ___________________ //
-
-router.put("/:id", designerController.modifyDesigner);
-
-// ___________________ Delete ___________________ //
-
-router.delete("/:id", designerController.deleteDesigner);
+router.get("/designers", isAdmin, designerController.getAllDesigners, (req, res) => {
+    res.render("designers", {designers: res.locals.designers})
+});
 
 module.exports = router;
