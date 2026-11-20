@@ -10,10 +10,11 @@ const createUser = async (req, res) => {
     }
 }
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
     try{
         const users = await user.find({});
-        res.status(200).json(users);
+        next();
+        // res.status(200).json(users);
     }
     catch (err) {
         res.status(500).json({message: err.message});

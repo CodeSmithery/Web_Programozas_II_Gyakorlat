@@ -10,10 +10,11 @@ const createMaterialCode = async (req, res) => {
     }
 }
 
-const getAllMaterialCodes = async (req, res) => {
+const getAllMaterialCodes = async (req, res, next) => {
     try{
-        const materialCodes = await materialCode.find({});
-        res.status(200).json(materialCodes);
+        res.locals.materialCodes = await materialCode.find({});
+        next();
+        // res.render(pageName, {materialCodes});
     }
     catch (err) {
         res.status(500).json({message: err.message});

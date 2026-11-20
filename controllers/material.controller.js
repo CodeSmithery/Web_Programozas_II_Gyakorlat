@@ -10,10 +10,10 @@ const createMaterial = async (req, res) => {
     }
 }
 
-const getAllMaterials = async (req, res) => {
+const getAllMaterials = async (req, res, next) => {
     try{
-        const materials = await material.find({});
-        res.status(200).json(materials);
+        res.locals.materials = await material.find({});
+        next();
     }
     catch (err) {
         res.status(500).json({message: err.message});

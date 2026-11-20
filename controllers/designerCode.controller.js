@@ -10,10 +10,11 @@ const createDesignerCode = async (req, res) => {
     }
 }
 
-const getAllDesignerCodes = async (req, res) => {
+const getAllDesignerCodes = async (req, res, next) => {
     try{
-        const _designerCodes = await designerCode.find({});
-        res.status(200).json({object: _designerCodes});
+        res.locals.designerCodes = await designerCode.find({});
+        next();
+        // res.render(pageName, {designerCodes});
     }
     catch (err) {
         res.status(500).json({message: err.message});

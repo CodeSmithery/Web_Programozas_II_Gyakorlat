@@ -10,10 +10,11 @@ const createDesigner = async (req, res) => {
     }
 }
 
-const getAllDesigners = async (req, res) => {
+const getAllDesigners = async (req, res, next) => {
     try{
-        const designers = await designer.find({});
-        res.status(200).json(designers);
+        res.locals.designers = await designer.find({});
+        next();
+        // res.render(pageName, {designers});
     }
     catch (err) {
         res.status(500).json({message: err.message});

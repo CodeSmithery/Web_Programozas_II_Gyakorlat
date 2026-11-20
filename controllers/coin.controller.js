@@ -10,10 +10,11 @@ const createCoin = async (req, res) => {
     }
 }
 
-const getAllCoins = async (req, res) => {
+const getAllCoins = async (req, res, next) => {
     try{
-        const coins = await coin.find({});
-        res.status(200).json(coins);
+        res.locals.coins = await coin.find({});
+        next();
+        // res.render(pageName, {coins});
     }
     catch (err) {
         res.status(500).json({message: err.message});
