@@ -14,7 +14,9 @@ const desigCRoute = require("./routes/designerCode.route.js");
 const designerRoute = require("./routes/designer.route.js");
 const userRoute = require("./routes/user.route.js");
 const feedbRoute = require("./routes/feedback.route.js");
-const mainRouter = require("./routes/mainRouter.js")
+const mainRouter = require("./routes/mainRouter.js");
+const dataRoute = require("./routes/data.route.js");
+const designerCodeModel = require("./models/designerCode.model.js");
 
 
 // MIDDLEWARE
@@ -35,9 +37,19 @@ app.use((req, res, next) => {
     req.session.message = "";
     next();
 });
-app.use("/", require("./routes/mainRouter"));
+
 
 // ROUTED
+app.use("/", mainRouter);
+app.use("/", feedbRoute);
+app.use("/", dataRoute);
+app.use("/crud", coinRoute);
+app.use("/crud", designerRoute);
+app.use("/crud", desigCRoute);
+app.use("/crud", materialRoute);
+app.use("/crud", materCRoute);
+app.use("/crud", userRoute);
+/*
 app.use("/api/materialCodes", materCRoute);
 app.use("/api/materials", materialRoute);
 app.use("/api/coins", coinRoute);
@@ -45,11 +57,7 @@ app.use("/api/designerCodes", desigCRoute);
 app.use("/api/designers", designerRoute);
 app.use("/api/users", userRoute);
 app.use("/api/feedbacks", feedbRoute);
-
-app.get("/", (req, res) => {
-    res.render("home");
-});
-
+*/
 app.listen(process.env.PORT || 3000, () => {
     console.log("A szerver fut a http://localhost:" + (process.env.PORT || 3000) + " címen.");
 });
