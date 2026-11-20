@@ -1,34 +1,132 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Web II beadandó</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/6/w3.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style>
-        body,h1,h2,h3,h4,h5,h6 {font-family:"Lato",sans-serif}
-        .w3-bar,h1,button {font-family:"Montserrat",sans-serif}
-        .fa-anchor,.fa-coffee {font-size:200px}
+<head>
+    <meta charset="UTF-8">
+    <title>Web II beadandó</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/6/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Lato", sans-serif
+        }
+        .w3-bar,
+        h1,
+        button {
+            font-family: "Montserrat", sans-serif
+        }
+
+        .fa-anchor,
+        .fa-coffee {
+            font-size: 200px
+        }
+
         .tab {
             display: inline-block;
             margin-left: 20px;
         }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
     <link rel="icon" href="/favicon.ico">
-    </head>
-    <body class="w3-dark-mode">
-        <nav class="w3-crimson w3-card w3-large w3-padding-16">
-            <div class="w3-flex w3-gap-tiny">
-                <div class="w3-container"><a href="/">Főoldal</a></div>
-                <div class="w3-container"><a href="/">Adatbázis</a></div>
-                <div class="w3-container"><a href="/">Kapcsolat</a></div>
-                <div class="w3-container"><% if(user && (user.role=="admin" || user.role=="user")){ %><a href="/">Üzenetek</a> <% } %></div>
-                <div class="w3-container"><% if(user && user.role=="admin"){ %><a href="/admin">Admin</a> <% } %></div>
-                <div class="w3-container" style="margin-left: auto;"><% if(!user){ %><a href="/login">Bejelentkezés</a><span class="tab"></span><a href="/register">Regisztráció</a></div>
-                <div class="w3-container"><% }else{ %><%= user.username %><span class="tab"></span><a href="/logout">Kijelentkezés</a> <% } %></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="w3-dark-mode">
+    <div class="w3-top">
+        <nav>
+            <nav class="w3-flex w3-crimson w3-card w3-large">
+                <a href="/" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                    Főoldal
+                </a>
+                <a href="/database" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                    Adatbázis
+                </a>
+                <a href="/contact" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                    Kapcsolat
+                </a>
+                <% if(user && (user.role=="admin" || user.role=="user")){ %>
+                    <a  href="/messages" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                        Üzenetek
+                    </a> 
+                    <% } 
+                %>
+                <% if(user && (user.role=="admin" || user.role=="user")){ %>
+                    <a  href="/diagram" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                        Diagram
+                    </a> 
+                    <% } 
+                %>
+                <% if(user && user.role=="admin"){ %>
+                    <a  href="/crud" class="w3-button w3-hide-small w3-padding-large w3-hover-white">
+                        Adatmódosítás
+                    </a> 
+                    <% } 
+                %>
+                <% if(!user) { %>
+                    <a href="/login" class="w3-button w3-hide-small w3-padding-large w3-hover-white" style="margin-left: auto">Bejelentkezés</a>
+                    <span class="tab"></span>
+                    <a class="w3-button w3-hide-small w3-padding-large w3-hover-white" href="/register">Regisztráció</a> 
+                    <% } 
+                %>
+                <% if(user) { %>
+                    <span class="w3-hide-small w3-padding-large" style="margin-left: auto"><%= user.username %></span>
+                    <span class="tab"></span>
+                    <a class="w3-button w3-hide-small w3-padding-large w3-hover-white" href="/logout">Kijelentkezés</a>
+                    <% } 
+                %>
+
+                <button class="w3-button w3-hide-medium w3-hide-large w3-padding-large w3-hover-white w3-crimson"
+                    style="margin-left:auto" onclick="myFunction()" title="Toggle Navigation Menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </nav>
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-responsive w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <a href="/" class="w3-button w3-bar-item">Főoldal</a>
+                <a href="/database" class="w3-button w3-bar-item">Adatbázis</a>
+                <a href="/contact" class="w3-bar-item w3-button ">Kapcsolat</a>
+                <% if(user && user.role=="admin"){ %><a href="/crud" class="w3-bar-item w3-button">CRUD</a> <% } %>
+                <% if(user && (user.role=="admin" || user.role=="user")){ %>
+                    <a class="w3-bar-item w3-button" href="/messages">
+                        Üzenetek
+                    </a> 
+                    <% } 
+                %>
+                <% if(user && (user.role=="admin" || user.role=="user")){ %>
+                    <a class="w3-bar-item w3-button" href="/diagram">
+                        Diagram
+                    </a> 
+                    <% } 
+                %>
+                <% if(user && user.role=="admin"){ %>
+                    <a  href="/crud" class="w3-bar-item w3-button">
+                        Adatmódosítás
+                    </a> 
+                    <% }
+                %>
+                <% if(!user) { %>
+                    <a href="/login" class="w3-bar-item w3-button">Bejelentkezés</a>
+                    <a class="w3-bar-item w3-button" href="/register">Regisztráció</a> 
+                    <% } 
+                %>
+                <% if(!!user) { %>
+                    <a class="w3-bar-item w3-button" href="/logout">Kijelentkezés</a>
+                    <% } 
+                %>
             </div>
         </nav>
-        <hr>
+    </div>
+    <div class="w3-padding-32 w3-flex-center w3-flex-align-center w3-responsive">
