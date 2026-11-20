@@ -1,4 +1,5 @@
 const coin = require("../models/coin.model.js");
+const { registerGet } = require("./mainController.js");
 
 const createCoin = async (req, res) => {
     console.log("Létrehozási kérelem érkezett:", req.body);
@@ -35,23 +36,23 @@ const getSingleCoin = async (req, res) => {
     }
 }
 
-const modifyCoin = async (req, res) => {
+const modifyCoin = async (req, res, next) => {
     try{
         const {id} = req.params;
         const toBeModified = await coin.findByIdAndUpdate(id, req.body);
 
         if(!toBeModified) {
-            return res.status(404).json({message: "Nincs ilyen azonosító!", id: id});
+            return res.status(404).render("404");
         }
-        const modified = await coin.findById(id);
-        res.status(200).json({message: "Frissítve!", object: modified});
+        req.session.modified = true;
+        next();
     }
     catch(err) {
         res.status(500).json({message: err.message});
     }
 }
 
-const deleteCoin = async (req, res) => {
+const deleteCoin = async (req, res, next) => {
     try{
         const {id} = req.params;
         const deleted =await coin.findByIdAndDelete(id);

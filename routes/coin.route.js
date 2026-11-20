@@ -10,6 +10,8 @@ isAdmin=(req,res,next)=>{
 router.get("/coins", isAdmin, coinController.getAllCoins, (req, res) => {
     res.render("coins", {coins: res.locals.coins})
 });
-
+router.put("/coins/:id", isAdmin, coinController.modifyCoin, (req, res) => {
+    res.redirect("/coins")
+})
 
 module.exports = router;

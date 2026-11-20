@@ -16,7 +16,7 @@ const userRoute = require("./routes/user.route.js");
 const feedbRoute = require("./routes/feedback.route.js");
 const mainRouter = require("./routes/mainRouter.js");
 const dataRoute = require("./routes/data.route.js");
-const designerCodeModel = require("./models/designerCode.model.js");
+const methodOverride = require("method-override");
 
 
 // MIDDLEWARE
@@ -35,9 +35,11 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user;
     res.locals.message = req.session.message || "";
     req.session.message = "";
+    res.locals.modified = req.session.modified || false;
+    req.session.modified = false;
     next();
 });
-
+app.use(methodOverride("_method"));
 
 // ROUTED
 app.use("/", mainRouter);

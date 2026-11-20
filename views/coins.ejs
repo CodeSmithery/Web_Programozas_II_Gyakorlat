@@ -1,30 +1,74 @@
 <%- include("partials/header") %>
-<div class="w3-padding-32 w3-responsive" style="margin-left: 5px; margin-right: 5px;">
-    <table class="w3-table w3-hoverable">
-        <thead>
-            <tr class="w3-blue-gray">
-                <th>Érme azonosító</th>
-                <th>Kiadott darabszám</th>
-                <th>Érme tömege</th>
-                <th>Érme címlete</th>
-                <th>Kiadás dátuma</th>
-                <th>Bevonás dátuma</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <% coins.forEach(coin => { %>
-                <tr>
-                    <td><%= coin.eremid %></td>
-                    <td><%= coin.darab %></td>
-                    <td><%= coin.tomeg %></td>
-                    <td><%= coin.cimlet %></td>
-                    <td><%= coin.kiadas.toLocaleString("hu-HU") %></td>
-                    <td><%= coin.bevonas.toLocaleString("hu-HU") %></td>
-                </tr>
-                <% }) 
-            %>
-        </tbody>
-    </table>
+<%
+    if(modified){%>
+        <H1 class="w3-success">SIKERES MÓDOSÍTÁS!</H1>
+        <%}
+%>
+<div class="w3-padding-32 w3-responsive">
+    <div class="w3-grid" style="grid-template-columns: 1fr;">
+        <div class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+            <h4 class="w3-container w3-center">Érme azonosító</h4>
+            <h4 class="w3-container w3-center">Kiadott darabszám</h4>
+            <h4 class="w3-container w3-center">Érme tömege</h4>
+            <h4 class="w3-container w3-center">Érme címlete</h4>
+            <h4 class="w3-container w3-center">Kiadás dátuma</h4>
+            <h4 class="w3-container w3-center">Bevonás dátuma</h4>
+            <h4 class="w3-container w3-center">Módosítás</h4>
+            <h4 class="w3-container w3-center">Törlés</h4>
+        </div>
+        <hr>
+        <% coins.forEach(coin => { %>
+                <div class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+                    <h6 class="w3-container w3-center"><%= coin.eremid %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.darab %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.tomeg %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.cimlet %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.kiadas.toLocaleString("hu-HU") %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.bevonas.toLocaleString("hu-HU") %></h6>
+                    <button class="w3-button w3-center" onclick="modify('<%= coin._id %>')">Módosít</button>
+                    <button class="w3-button w3-center">Töröl</button>
+                </div>
+                <div id="<%= coin._id%>"></div>
+                <hr>
+            <% })
+        %>
+    </div>
 </div>
+<script>
+    const _coins = <%- JSON.stringify(coins) %>; 
+
+    function modify(id){
+        const modifiedDiv = document.getElementById(id);
+        const coin = _coins.find(c => c._id === id)
+        modifiedDiv.innerHTML = `
+        <form method="POST" action="/crud/coins/${coin._id}?_method=PUT" class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 2fr;">
+            <div>
+                <label></label>
+                <input name="eremid" value="${coin.eremid}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label></label>
+                <input name="darab" value="${coin.darab}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label></label>
+                <input name="tomeg" value="${coin.tomeg}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label></label>
+                <input name="cimlet" value="${coin.cimlet}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label></label>
+                <input name="kiadas" value="${coin.kiadas}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label></label>
+                <input name="bevonas" value="${coin.bevonas}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <button class="w3-container">Módosít</button>
+        </form>
+        `
+    }
+</script>
 <%- include("partials/footer") %>
