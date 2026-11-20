@@ -1,0 +1,45 @@
+<%- include("partials/header") %>
+<div class="w3-card w3-padding w3-margin w3-white">
+    <h3>Kiadott darabszám címletenként</h3>
+
+    <canvas id="coinChart"></canvas>
+</div>
+<script>
+    const coins = <%- JSON.stringify(coins) %>;
+
+    const labels = coins.map(c => c.cimlet + " Ft");
+    const values = coins.map(c => c.darab);
+
+    const ctx = document.getElementById("coinChart");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Kiadott darabszám",
+                data: values,
+                backgroundColor: [
+                    "#e74c3c",
+                    "#f39c12",
+                    "#f1c40f",
+                    "#2ecc71",
+                    "#3498db",
+                    "#9b59b6",
+                    "#1abc9c",
+                    "#34495e"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+<%- include("partials/footer") %>

@@ -1,0 +1,119 @@
+<%- include("partials/header") %>
+<div class="w3-center w3-grid w3-responsive" style="grid-template-columns: 1fr; gap: 20px; margin-left: 16px; margin-right: 16px; margin-top: 50px;">
+    <div>
+        <h2>Érmék</h2>
+        <table class="w3-table w3-hoverable w3-striped w3-border">
+            <thead>
+                <tr class="w3-blue-gray">
+                    <th>Érme azonosító</th>
+                    <th>Kiadott darabszám</th>
+                    <th>Érme tömege</th>
+                    <th>Érme címlete</th>
+                    <th>Kiadás dátuma</th>
+                    <th>Bevonás dátuma</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <% coins.forEach(coin => { %>
+                    <tr>
+                        <td><%= coin.eremid %></td>
+                        <td><%= coin.darab %></td>
+                        <td><%= coin.tomeg %></td>
+                        <td><%= coin.cimlet %></td>
+                        <td><%= coin.kiadas.toLocaleString("hu-HU") %></td>
+                        <td><%= coin.bevonas.toLocaleString("hu-HU") %></td>
+                    </tr>
+                    <% }) 
+                %>
+            </tbody>
+        </table>
+    </div>
+    <div class="w3-grid" style="grid-template-columns: 1fr 1fr; gap: 20px">
+        <div class="w3-card">
+            <h2>Tervező kódok</h2>
+            <table class="w3-table w3-hoverable w3-striped w3-border">
+                <thead>
+                    <tr class="w3-blue-gray">
+                        <th>Érme kódja</th>
+                        <th>Tervező kódja</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <% designerCodes.forEach(designerCode => { %>
+                        <tr>
+                            <td><%= designerCode.ermeid %></td>
+                            <td><%= designerCode.tervezoid %></td>
+                        </tr>
+                        <% }) 
+                    %>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>Tervezők</h2>
+            <table class="w3-table w3-hoverable w3-striped w3-border">
+                <thead>
+                    <tr class="w3-blue-gray">
+                        <th>Érme kódja</th>
+                        <th>Tervező neve</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <% designers.forEach(designer => { %>
+                        <tr>
+                            <td><%= designer.tid %></td>
+                            <td><%= designer.nev %></td>
+                        </tr>
+                        <% }) 
+                    %>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>Anyag kódok</h2>
+            <table class="w3-table w3-hoverable w3-striped w3-border">
+                <thead>
+                    <tr class="w3-blue-gray">
+                        <th>Érem azonosítója</th>
+                        <th>Fém azonosítója</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <% materialCodes.forEach(materialCode => { %>
+                        <tr>
+                            <td><%= materialCode.ermeid %></td>
+                            <td><%= materialCode.femid %></td>
+                        </tr>
+                        <% }) 
+                    %>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>Anyagok</h2>
+            <table class="w3-table w3-hoverable w3-striped w3-border">
+                <thead>
+                    <tr class="w3-blue-gray">
+                        <th>Fém azonosítója</th>
+                        <th>Fém neve</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <% materials.forEach(material => { %>
+                        <tr>
+                            <td><%= material.femid %></td>
+                            <td><%= material.femnev %></td>
+                        </tr>
+                        <% }) 
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>

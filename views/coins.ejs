@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+<div class="w3-padding-32 w3-responsive" style="margin-left: 5px; margin-right: 5px;">
+    <table class="w3-table w3-hoverable">
+        <thead>
+            <tr class="w3-blue-gray">
+                <th>Érme azonosító</th>
+                <th>Kiadott darabszám</th>
+                <th>Érme tömege</th>
+                <th>Érme címlete</th>
+                <th>Kiadás dátuma</th>
+                <th>Bevonás dátuma</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% coins.forEach(coin => { %>
+                <tr>
+                    <td><%= coin.eremid %></td>
+                    <td><%= coin.darab %></td>
+                    <td><%= coin.tomeg %></td>
+                    <td><%= coin.cimlet %></td>
+                    <td><%= coin.kiadas.toLocaleString("hu-HU") %></td>
+                    <td><%= coin.bevonas.toLocaleString("hu-HU") %></td>
+                </tr>
+                <% }) 
+            %>
+        </tbody>
+    </table>
+</div>
+<%- include("partials/footer") %>
