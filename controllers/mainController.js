@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 exports.homeIndex = (req, res) => { res.render("home"); };
 exports.userIndex = (req, res) => { res.render("user"); };
 exports.adminIndex = (req, res) => { res.render("admin"); };
-exports.crudIndex = (req, res) => { res.render("crud"); };
+// exports.crudIndex = (req, res) => { res.render("crud"); };
 
 
 exports.registerGet = (req, res) => { res.render("register"); };
