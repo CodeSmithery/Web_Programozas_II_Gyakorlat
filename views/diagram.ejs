@@ -6,7 +6,7 @@
 </div>
 <script>
     const coins = <%- JSON.stringify(coins) %>;
-
+    coins.sort((a, b) => Number(b.cimlet) - Number(a.cimlet));
     const labels = coins.map(c => c.cimlet + " Ft");
     const values = coins.map(c => c.darab);
 

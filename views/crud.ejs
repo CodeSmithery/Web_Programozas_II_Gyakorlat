@@ -1,13 +1,127 @@
 <%- include("partials/header") %>
-<div>
-    <h1 class="w3-center w3-padding-32">Válaszd ki melyikkel szeretnél dolgozni!</h1>
-    <div class="w3-grid" style="grid-template-columns: 1fr 1fr; gap: 20px">
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/users">Felhasználók</a>
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/coins">Érmék</a>
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/designers">Tervezők</a>
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/designerCodes">Tervező kódok</a>
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/materials">Anyagok</a>
-        <a class="w3-button w3-hoverable w3-crimson w3-large w3-padding" href="/crud/materialCodes">Anyag kódok</a>
+<div class="w3-flex-column w3-center w3-container w3-padding-32 w3-responsive">
+    <%
+        if(modified){%>
+            <h3 class="w3-success">SIKERES MÓDOSÍTÁS!</h3>
+            <hr>
+            <%}
+        if(created){%>
+        <h3 class="w3-success">SIKERES LÉTREHOZÁS!</h3>
+        <hr>
+        <%}
+        if(deleted){%>
+        <h3 class="w3-success">SIKERES TÖRLÉS!</h3>
+        <hr>
+        <%}
+    %>
+    
+    <div id="createDiv">
+        <button class="w3-button" onclick="create(this)">Új létrehozása</button>
+        <hr>
+    </div>
+    <div class="w3-padding-32 w3-responsive">
+        <div class="w3-grid" style="grid-template-columns: 1fr;">
+            <div class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+                <h5 class="w3-container w3-center">Érem azonosító</h5>
+                <h5 class="w3-container w3-center">Kiadott darabszám</h5>
+                <h5 class="w3-container w3-center">Érme tömege</h5>
+                <h5 class="w3-container w3-center">Érme címlete</h5>
+                <h5 class="w3-container w3-center">Kiadás dátuma</h5>
+                <h5 class="w3-container w3-center">Bevonás dátuma</h5>
+                <h5 class="w3-container w3-center"></h5>
+                <h5 class="w3-container w3-center"></h5>
+            </div>
+            <hr>
+            <% coins.forEach(coin => { %>
+                <div class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+                    <h6 class="w3-container w3-center"><%= coin.eremid %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.darab %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.tomeg %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.cimlet %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.kiadas.toLocaleString("hu-HU") %></h6>
+                    <h6 class="w3-container w3-center"><%= coin.bevonas.toLocaleString("hu-HU") %></h6>
+                    <button class="w3-button w3-center w3-blue" 
+                    onclick="modify('<%= coin._id %>', this)">Módosítás
+                </button>
+                    <form method="POST" action="/crud/del/<%= coin._id%>?_method=DELETE"><button class="w3-button w3-center w3-red">Törlés</button></form>
+                </div>
+                <div id="<%= coin._id%>"></div>
+                <hr>
+                <% })
+            %>
+        </div>
     </div>
 </div>
+<script>
+    const _coins = <%- JSON.stringify(coins) %>; 
+
+    function modify(id, button){
+        const modifiedDiv = document.getElementById(id);
+        const coin = _coins.find(c => c._id === id);
+        button.style.visibility = "hidden";
+        modifiedDiv.innerHTML = `
+        <form method="POST" action="/crud/${coin._id}?_method=PUT" class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+            <div>
+                <label>Érem azonosító</label>
+                <input name="eremid" value="${coin.eremid}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Darabszám</label>
+                <input name="darab" value="${coin.darab}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Érem tömege</label>
+                <input name="tomeg" value="${coin.tomeg}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Érem címlete</label>
+                <input name="cimlet" value="${coin.cimlet}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Kiadás dátuma</label>
+                <input name="kiadas" value="${coin.kiadas}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Bevoás dátuma</label>
+                <input name="bevonas" value="${coin.bevonas}" maxlength="50" required class="w3-container w3-input w3-center">
+            </div>
+            <button class="w3-container w3-button w3-green">Módosít</button>
+        </form>
+        `;
+    }
+
+    function create(button){
+        const createDiv = document.getElementById("createDiv");
+        button.style.display = "none";
+        createDiv.innerHTML = `
+        <form method="POST" action="/crud/create" class="w3-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+            <div>
+                <label>Érem azonosító</label>
+                <input name="eremid" maxlength="50" placeholder="1" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Darabszám</label>
+                <input name="darab" maxlength="50" placeholder="69420" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Érem tömege</label>
+                <input name="tomeg" maxlength="50" placeholder="12" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Érem címlete</label>
+                <input name="cimlet" maxlength="50" placeholder="4" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Kiadás dátuma</label>
+                <input name="kiadas" maxlength="50" placeholder="1990-01-12" required class="w3-container w3-input w3-center">
+            </div>
+            <div>
+                <label>Bevoás dátuma</label>
+                <input name="bevonas" maxlength="50" placeholder="1990-01-13" required class="w3-container w3-input w3-center">
+            </div>
+            <button class="w3-container w3-button w3-green">Létrehoz</button>
+        </form>
+        `;
+    }
+</script>
 <%- include("partials/footer") %>

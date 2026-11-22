@@ -37,6 +37,10 @@ app.use((req, res, next) => {
     req.session.message = "";
     res.locals.modified = req.session.modified || false;
     req.session.modified = false;
+    res.locals.created = req.session.created || false;
+    req.session.created = false;
+    res.locals.deleted = req.session.deleted || false;
+    req.session.deleted = false;
     next();
 });
 app.use(methodOverride("_method"));
@@ -46,11 +50,6 @@ app.use("/", mainRouter);
 app.use("/", feedbRoute);
 app.use("/", dataRoute);
 app.use("/crud", coinRoute);
-app.use("/crud", designerRoute);
-app.use("/crud", desigCRoute);
-app.use("/crud", materialRoute);
-app.use("/crud", materCRoute);
-app.use("/crud", userRoute);
 
 
 app.use((req, res) => {

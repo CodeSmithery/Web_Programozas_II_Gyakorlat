@@ -1,4 +1,108 @@
 <%- include("partials/header") %>
-<h1>Home</h1>
-<p>Available to all visitors.</p>
+<div class="w3-content w3-padding-16" style="max-width: 1100px;">
+    <div class="w3-center w3-padding-32">
+        <h1 class="w3-xxxlarge w3-text-red">
+            Forintérme Nyilvántartó Rendszer
+        </h1>
+        <p class="w3-large w3-text-grey">
+            Node.js, Express, MongoDB és EJS alapú webalkalmazás magyar forintérmék
+            kezelésére, megjelenítésére és elemzésére.
+        </p>
+    </div>
+
+    <div class="w3-panel w3-grey w3-leftbar w3-border-blue w3-round-large">
+        <h3 class="w3-text-red">📖 A projektről:</h3>
+        <p>
+            Az alkalmazás modern szerveroldali webes technológiákra épül. A rendszer
+            lehetőséget biztosít felhasználói fiókok kezelésére, érmeadatok
+            megjelenítésére, üzenetküldésre, diagramok készítésére és adminisztrátori
+            adatmódosításra.
+        </p>
+    </div>
+
+    <div class="w3-row-padding w3-margin-top">
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">🔐 Felhasználók</h3>
+                <p>
+                    Regisztráció, bejelentkezés, kijelentkezés és szerepkör alapú
+                    jogosultságkezelés.
+                </p>
+            </div>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">🪙 Érmeadatbázis</h3>
+                <p>
+                    A magyar forintérmék adatainak megjelenítése és lekérdezése.
+                </p>
+            </div>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">📊 Diagramok</h3>
+                <p>
+                    Chart.js segítségével készített statisztikai ábrák és grafikonok.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w3-row-padding">
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">✉️ Kapcsolat</h3>
+                <p>
+                    Kapcsolatfelvételi űrlap és az elküldött üzenetek kezelése.
+                </p>
+            </div>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">⚙️ Admin felület</h3>
+                <p>
+                    CRUD funkciók az érmeadatok létrehozásához, módosításához és
+                    törléséhez.
+                </p>
+            </div>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <div class="w3-card w3-grey w3-padding">
+                <h3 class="w3-text-red">💾 Adatbázis</h3>
+                <p>
+                    MongoDB és Mongoose alapú adatkezelés biztonságos felhasználói
+                    azonosítással.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w3-card w3-grey w3-margin-top">
+        <header class="w3-container w3-dark-grey">
+            <h2 class="w3-text-red">Alkalmazott technológiák:</h2>
+        </header>
+
+        <div class="w3-container w3-padding">
+            <span class="w3-tag w3-blue w3-margin-bottom">Node.js</span>
+            <span class="w3-tag w3-green w3-margin-bottom">Express</span>
+            <span class="w3-tag w3-orange w3-margin-bottom">MongoDB</span>
+            <span class="w3-tag w3-red w3-margin-bottom">Mongoose</span>
+            <span class="w3-tag w3-purple w3-margin-bottom">EJS</span>
+            <span class="w3-tag w3-teal w3-margin-bottom">bcrypt</span>
+            <span class="w3-tag w3-indigo w3-margin-bottom">express-session</span>
+            <span class="w3-tag w3-brown w3-margin-bottom">connect-mongo</span>
+            <span class="w3-tag w3-dark-grey w3-margin-bottom">Chart.js</span>
+            <span class="w3-tag w3-cyan w3-margin-bottom">W3.CSS</span>
+        </div>
+    </div>
+
+</div>
 <%- include("partials/footer") %>
